@@ -32,7 +32,7 @@ BLUE2 = (0, 100, 255)
 BLACK = (0, 0, 0)
 
 
-class SnakeGameAI:
+class SnakeGameEnv:
     def __init__(self, width=640, height=480):
         self.width = width
         self.height = height
