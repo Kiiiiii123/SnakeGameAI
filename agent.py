@@ -3,6 +3,7 @@ import random
 import numpy as np
 from collections import deque
 from game_env import SnakeGameEnv, Direction, Point
+from model import QNet, Trainer
 
 MAX_MEMORY = 100_000
 BATCH_SIZE = 1000
@@ -13,10 +14,10 @@ class Agent:
     def __init__(self):
         self.num_games = 0
         self.epsilon = 0  # to control the randomness
-        self.gamma = 0  # discount rate
+        self.gamma = 0.9  # discount rate
         self.memory = deque(maxlen=MAX_MEMORY)  # pop left
-        self.model = None
-        self.trainer = None
+        self.model = QNet(11, 256, 3)
+        self.trainer = Trainer(self.model, lr=LR, gamma=self.gamma)
 
     def get_state(self, env):
         head = env.snake[0]
@@ -87,7 +88,7 @@ class Agent:
             move[move_idx] = 1
         else:
             state0 = torch.tensor(state, dtype=torch.float)
-            prediction = self.model.predict(state0)
+            prediction = self.model(state0)
             move_idx = torch.argmax(prediction).item()
             move[move_idx] = 1
 
@@ -129,7 +130,7 @@ def train():
 
             if score > record_score:
                 record_score = score
-                # TODO agent.model.save()
+                agent.model.save_model()
 
             print("Game", agent.num_games, "Score", score, "Record", record_score)
 
