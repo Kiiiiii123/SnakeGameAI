@@ -22,7 +22,7 @@ class Direction(Enum):
 Point = namedtuple("Point", "x, y")
 
 BLOCK_SIZE = 20
-GAME_SPEED = 20
+GAME_SPEED = 40
 
 # RGB Colors
 WHITE = (255, 255, 255)
