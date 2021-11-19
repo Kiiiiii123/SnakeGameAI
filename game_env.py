@@ -7,6 +7,8 @@ import numpy as np
 pygame.init()
 
 font = pygame.font.Font("arial.ttf", 25)
+
+
 # font = pygame.font.SysFont("arial", 25)
 
 
@@ -22,7 +24,7 @@ class Direction(Enum):
 Point = namedtuple("Point", "x, y")
 
 BLOCK_SIZE = 20
-GAME_SPEED = 40 # set 20 when human play the game.
+GAME_SPEED = 40  # set 20 when human play the game.
 
 # RGB Colors
 WHITE = (255, 255, 255)
@@ -53,8 +55,7 @@ class SnakeGameEnv:
         self.snake = [
             self.head_position,
             Point(self.head_position.x - BLOCK_SIZE, self.head_position.y),
-            Point(self.head_position.x - (2 * BLOCK_SIZE), self.head_position.y),
-        ]
+            Point(self.head_position.x - (2 * BLOCK_SIZE), self.head_position.y)]
         self.score = 0
         self.food = None
         self._place_food()
@@ -72,6 +73,7 @@ class SnakeGameEnv:
 
     # given an action and return the reward
     def play_step(self, action):
+        self.frame_iteration += 1
         # 1. collect user input
         for event in pygame.event.get():
             # we can get rid of the user input
@@ -85,17 +87,17 @@ class SnakeGameEnv:
 
         # 3. check if the game is over
         reward = 0
-        game_over = False
+        self.game_over = False
         if self.is_collision() or self.frame_iteration > 100 * len(self.snake):
-            game_over = True
+            self.game_over = True
             reward = -10
-            return reward, game_over, self.score
+            return reward, self.game_over, self.score
 
         # 4. place new food or just move
         if self.head_position == self.food:
-            self._place_food()
-            reward = 10
             self.score += 1
+            reward = 10
+            self._place_food()
         else:
             self.snake.pop()
 
@@ -104,7 +106,7 @@ class SnakeGameEnv:
         self.clock.tick(GAME_SPEED)
 
         # 6. return if the game is over and the score
-        return reward, game_over, self.score
+        return reward, self.game_over, self.score
 
     def _update_ui(self):
         # background
@@ -141,8 +143,8 @@ class SnakeGameEnv:
         idx = clock_wise.index(self.snake_direction)
 
         if np.array_equal(action, [1, 0, 0]):
-            next_direction = self.snake_direction  # no change
-        if np.array_equal(action, [0, 1, 0]):
+            next_direction = clock_wise[idx]  # no change
+        elif np.array_equal(action, [0, 1, 0]):
             next_idx = (idx + 1) % 4
             next_direction = clock_wise[next_idx]  # right turn: r -> d -> l -> u
         else:
@@ -171,12 +173,10 @@ class SnakeGameEnv:
             point = self.head_position
 
         # the snake hits the boundary
-        if (
-            point.x > self.width - BLOCK_SIZE
-            or point.x < 0
-            or point.y > self.height - BLOCK_SIZE
-            or point.y < 0
-        ):
+        if (point.x > self.width - BLOCK_SIZE
+                or point.x < 0
+                or point.y > self.height - BLOCK_SIZE
+                or point.y < 0):
             return True
 
         # the snake hits itself

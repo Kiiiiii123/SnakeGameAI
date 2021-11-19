@@ -3,7 +3,7 @@ import random
 import numpy as np
 from collections import deque
 from game_env import SnakeGameEnv, Direction, Point
-from model import Linear_QNet, Linear_QTrainer
+from model import Linear_QNet, QTrainer
 from helper import plot
 
 MAX_MEMORY = 100_000
@@ -18,14 +18,14 @@ class Agent:
         self.gamma = 0.9  # discount rate
         self.memory = deque(maxlen=MAX_MEMORY)  # pop left
         self.model = Linear_QNet(11, 256, 3)
-        self.trainer = Linear_QTrainer(self.model, lr=LR, gamma=self.gamma)
+        self.trainer = QTrainer(self.model, lr=LR, gamma=self.gamma)
 
     def get_state(self, env):
         head = env.snake[0]
         point_l = Point(head.x - 20, head.y)
         point_r = Point(head.x + 20, head.y)
-        point_u = Point(head.x, head.y + 20)
-        point_d = Point(head.x, head.y - 20)
+        point_u = Point(head.x, head.y - 20)
+        point_d = Point(head.x, head.y + 20)
 
         dir_l = env.snake_direction == Direction.LEFT
         dir_r = env.snake_direction == Direction.RIGHT
@@ -34,22 +34,22 @@ class Agent:
 
         state = [
             # Danger straight
-            (dir_l and env.is_collision(point_l))
-            or (dir_r and env.is_collision(point_r))
+            (dir_r and env.is_collision(point_r))
+            or (dir_l and env.is_collision(point_l))
             or (dir_u and env.is_collision(point_u))
             or (dir_d and env.is_collision(point_d)),
 
             # Danger right
-            (dir_l and env.is_collision(point_u))
-            or (dir_r and env.is_collision(point_d))
-            or (dir_u and env.is_collision(point_r))
-            or (dir_d and env.is_collision(point_l)),
+            (dir_u and env.is_collision(point_r))
+            or (dir_d and env.is_collision(point_l))
+            or (dir_l and env.is_collision(point_u))
+            or (dir_r and env.is_collision(point_d)),
 
             # Danger left
-            (dir_l and env.is_collision(point_d))
-            or (dir_r and env.is_collision(point_u))
+            (dir_d and env.is_collision(point_r))
             or (dir_u and env.is_collision(point_l))
-            or (dir_d and env.is_collision(point_r)),
+            or (dir_r and env.is_collision(point_u))
+            or (dir_l and env.is_collision(point_d)),
 
             # Move direction
             dir_l,

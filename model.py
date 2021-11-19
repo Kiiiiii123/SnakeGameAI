@@ -25,7 +25,7 @@ class Linear_QNet(nn.Module):
         torch.save(self.state_dict(), model_path)
 
 
-class Linear_QTrainer:
+class QTrainer:
     def __init__(self, model, lr, gamma):
         self.model = model
         self.lr = lr
@@ -53,12 +53,10 @@ class Linear_QTrainer:
         for idx in range(len(done)):
             state_action_val = reward[idx]
             if not done[idx]:
-                state_action_val = reward[idx] + self.gamma * torch.max(
-                    self.model(next_state[idx])
-                )
+                state_action_val = reward[idx] + self.gamma * torch.max(self.model(next_state[idx]))
             target[idx][torch.argmax(action[idx]).item()] = state_action_val
 
         self.optimizer.zero_grad()
-        loss = self.criterion(prediction, target)
+        loss = self.criterion(target, prediction)
         loss.backward()
         self.optimizer.step()

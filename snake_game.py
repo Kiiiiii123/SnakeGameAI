@@ -6,6 +6,8 @@ from collections import namedtuple
 pygame.init()
 
 font = pygame.font.Font("arial.ttf", 25)
+
+
 # font = pygame.font.SysFont("arial", 25)
 
 
@@ -93,8 +95,8 @@ class SnakeGame:
 
         # 4. place new food or just move
         if self.head_position == self.food:
-            self._place_food()
             self.score += 1
+            self._place_food()
         else:
             self.snake.pop()
 
@@ -114,17 +116,19 @@ class SnakeGame:
             pygame.draw.rect(
                 self.display,
                 BLUE1,
-                pygame.Rect(point.x, point.y, BLOCK_SIZE, BLOCK_SIZE),
+                pygame.Rect(point.x, point.y, BLOCK_SIZE, BLOCK_SIZE)
             )
             pygame.draw.rect(
-                self.display, BLUE2, pygame.Rect(point.x + 4, point.y + 4, 12, 12)
+                self.display,
+                BLUE2,
+                pygame.Rect(point.x + 4, point.y + 4, 12, 12)
             )
 
         # draw the food
         pygame.draw.rect(
             self.display,
             RED,
-            pygame.Rect(self.food.x, self.food.y, BLOCK_SIZE, BLOCK_SIZE),
+            pygame.Rect(self.food.x, self.food.y, BLOCK_SIZE, BLOCK_SIZE)
         )
 
         # draw the score
@@ -151,12 +155,10 @@ class SnakeGame:
 
     def _is_collision(self):
         # the snake hits the boundary
-        if (
-            self.head_position.x > self.width - BLOCK_SIZE
-            or self.head_position.x < 0
-            or self.head_position.y > self.height - BLOCK_SIZE
-            or self.head_position.y < 0
-        ):
+        if (self.head_position.x > self.width - BLOCK_SIZE
+                or self.head_position.x < 0
+                or self.head_position.y > self.height - BLOCK_SIZE
+                or self.head_position.y < 0):
             return True
 
         # the snake hits itself
@@ -174,8 +176,8 @@ if __name__ == "__main__":
         game_over, score = game.play_step()
 
         # break if game over
-        if game_over:
+        if game_over == True:
             break
 
-    print("Final Score: " + str(score))
+    print("Final Score: ", score)
     pygame.quit()
