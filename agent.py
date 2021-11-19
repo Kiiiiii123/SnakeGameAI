@@ -38,21 +38,25 @@ class Agent:
             or (dir_r and env.is_collision(point_r))
             or (dir_u and env.is_collision(point_u))
             or (dir_d and env.is_collision(point_d)),
+
             # Danger right
             (dir_l and env.is_collision(point_u))
             or (dir_r and env.is_collision(point_d))
             or (dir_u and env.is_collision(point_r))
             or (dir_d and env.is_collision(point_l)),
+
             # Danger left
             (dir_l and env.is_collision(point_d))
             or (dir_r and env.is_collision(point_u))
             or (dir_u and env.is_collision(point_l))
             or (dir_d and env.is_collision(point_r)),
+
             # Move direction
             dir_l,
             dir_r,
             dir_u,
             dir_d,
+
             # Food location
             env.food.x < env.head_position.x,  # food left
             env.food.x > env.head_position.x,  # food right
@@ -124,7 +128,7 @@ def train():
         agent.store_data(old_state, move, reward, new_state, done)
 
         if done:
-            # train long memory and plot the results
+            # train long memory (all the previous episodes) and plot the results
             env.reset()
             agent.num_games += 1
             agent.train_long_memory()
