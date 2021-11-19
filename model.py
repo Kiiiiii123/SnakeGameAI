@@ -5,7 +5,7 @@ import torch.nn.functional as F
 import os
 
 
-class QNet(nn.Module):
+class Linear_QNet(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
         super().__init__()
         self.linear1 = nn.Linear(input_size, hidden_size)
@@ -25,7 +25,7 @@ class QNet(nn.Module):
         torch.save(self.state_dict(), model_path)
 
 
-class Trainer:
+class Linear_QTrainer:
     def __init__(self, model, lr, gamma):
         self.model = model
         self.lr = lr

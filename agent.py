@@ -3,7 +3,7 @@ import random
 import numpy as np
 from collections import deque
 from game_env import SnakeGameEnv, Direction, Point
-from model import QNet, Trainer
+from model import Linear_QNet, Linear_QTrainer
 from helper import plot
 
 MAX_MEMORY = 100_000
@@ -17,8 +17,8 @@ class Agent:
         self.epsilon = 0  # to control the randomness
         self.gamma = 0.9  # discount rate
         self.memory = deque(maxlen=MAX_MEMORY)  # pop left
-        self.model = QNet(11, 256, 3)
-        self.trainer = Trainer(self.model, lr=LR, gamma=self.gamma)
+        self.model = Linear_QNet(11, 256, 3)
+        self.trainer = Linear_QTrainer(self.model, lr=LR, gamma=self.gamma)
 
     def get_state(self, env):
         head = env.snake[0]
