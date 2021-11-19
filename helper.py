@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from IPython import display
 
+# Turn the interactive mode on.
 plt.ion()
 
 
