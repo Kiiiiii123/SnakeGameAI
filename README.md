@@ -14,6 +14,7 @@ SnakeGameAI
 ├─ model
 │    └─ model.pth
 ├─ model.py
+├─ requirements.txt
 └─ snake_game.py
 ```
 
