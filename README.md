@@ -37,7 +37,7 @@ SnakeGameAI
 #### Take the following figure for example:
 
 <p align="center">
-<img src="/images/960.png"><br/>
+<img src="https://github.com/Kiiiiii123/Kiiiiii123.github.io/blob/master/images/960.png"><br/>
 </p>
 
 - #### Action Space
@@ -63,31 +63,31 @@ else:        0
 - #### Deep Q Learning
 
 <p align="center">
-<img src="/images/962.png"><br/>
+<img src="https://github.com/Kiiiiii123/Kiiiiii123.github.io/blob/master/images/962.png"><br/>
 </p>
 
 - #### Model
 
 <p align="center">
-<img src="/images/961.png"><br/>
+<img src="https://github.com/Kiiiiii123/Kiiiiii123.github.io/blob/master/images/961.png"><br/>
 </p>
 
 - #### Bellman Equation
 
 <p align="center">
-<img src="/images/963.png"><br/>
+<img src="https://github.com/Kiiiiii123/Kiiiiii123.github.io/blob/master/images/963.png"><br/>
 </p>
 
 - #### Q Update Rule Simplified
 
 <p align="center">
-<img src="/images/964.png"><br/>
+<img src="https://github.com/Kiiiiii123/Kiiiiii123.github.io/blob/master/images/964.png"><br/>
 </p>
 
 - #### Loss Function
 
 <p align="center">
-<img src="/images/965.png"><br/>
+<img src="https://github.com/Kiiiiii123/Kiiiiii123.github.io/blob/master/images/965.png"><br/>
 </p>
 
 ### Experiments
@@ -97,8 +97,8 @@ else:        0
 #### After training for about 100 games, we can get a pretty good agent：
 
 <p align="center">
-<img src="/images/967.png"><br/>
+<img src="https://github.com/Kiiiiii123/Kiiiiii123.github.io/blob/master/images/967.png"><br/>
 </p>
 <p align="center">
-<img src="/images/966.png"><br/>
+<img src="https://github.com/Kiiiiii123/Kiiiiii123.github.io/blob/master/images/966.png"><br/>
 </p>
